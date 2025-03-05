@@ -12,6 +12,8 @@ public class SegmentController : MonoBehaviour
     public GameObject segmentUntenRechts;
     public GameObject segmentUnten;
 
+    private bool isLocked = false;
+
     private Dictionary<int, bool[]> zahlen = new Dictionary<int, bool[]>()
     {
         { 0, new bool[] { true, true, true, false, true, true, true } },  // 0
@@ -28,11 +30,15 @@ public class SegmentController : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i <= 9; i++)
+        if (!isLocked) 
         {
-            if (Input.GetKeyDown(i.ToString()))
+            for (int i = 0; i <= 9; i++)
             {
-                SetNumber(i);
+                if (Input.GetKeyDown(i.ToString()))
+                {
+                    SetNumber(i);
+                    isLocked = true; 
+                }
             }
         }
     }
@@ -48,5 +54,11 @@ public class SegmentController : MonoBehaviour
         segmentUntenLinks.SetActive(segments[4]);
         segmentUntenRechts.SetActive(segments[5]);
         segmentUnten.SetActive(segments[6]);
+    }
+
+    
+    public void RotateDisplay()
+    {
+        transform.Rotate(0, 180, 0);
     }
 }
